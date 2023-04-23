@@ -105,16 +105,9 @@ jobs:
       TOKEN: ${{ secrets.GHA_CONTAINER_DELETE_TOKEN }}
     steps:
       -
-        name: Login to Github Container Registry
-        uses: docker/login-action@v2
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-      -
         name: Clean untagged images
         if: "${{ env.TOKEN != '' }}"
-        uses: stumpylog/untagged-image-cleaner@main
+        uses: stumpylog/image-cleaner-action/untagged@main
         with:
           token: ${{ env.TOKEN }}
           owner: ${{ github.repository_owner }}
