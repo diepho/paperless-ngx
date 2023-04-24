@@ -46,6 +46,7 @@ jobs:
     needs:
       - cleanup-images
     strategy:
+      fail-fast: false
       matrix:
         include:
           - primary-name: "paperless-ngx"
