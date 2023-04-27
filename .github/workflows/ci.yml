@@ -381,12 +381,12 @@ jobs:
             PSYCOPG2_VERSION=${{ fromJSON(needs.prepare-docker-build.outputs.psycopg2-json).version }}
           # Get cache layers from this branch, then dev, then main
           # This allows new branches to get at least some cache benefits, generally from dev
-          # cache-from: |
-          #   type=registry,ref=ghcr.io/${{ needs.prepare-docker-build.outputs.ghcr-repository }}/builder/cache/app:${{ github.ref_name }}
-          #   type=registry,ref=ghcr.io/${{ needs.prepare-docker-build.outputs.ghcr-repository }}/builder/cache/app:dev
-          #   type=registry,ref=ghcr.io/${{ needs.prepare-docker-build.outputs.ghcr-repository }}/builder/cache/app:main
-          # cache-to: |
-          #   type=registry,mode=max,ref=ghcr.io/${{ needs.prepare-docker-build.outputs.ghcr-repository }}/builder/cache/app:${{ github.ref_name }}
+          cache-from: |
+            type=registry,ref=ghcr.io/${{ needs.prepare-docker-build.outputs.ghcr-repository }}/builder/cache/app:${{ github.ref_name }}
+            type=registry,ref=ghcr.io/${{ needs.prepare-docker-build.outputs.ghcr-repository }}/builder/cache/app:dev
+            type=registry,ref=ghcr.io/${{ needs.prepare-docker-build.outputs.ghcr-repository }}/builder/cache/app:main
+          cache-to: |
+            type=registry,mode=max,ref=ghcr.io/${{ needs.prepare-docker-build.outputs.ghcr-repository }}/builder/cache/app:${{ github.ref_name }}
       -
         name: Inspect image
         run: |
