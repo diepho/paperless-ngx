@@ -314,8 +314,28 @@ jobs:
       -
         name: Checkout
         uses: actions/checkout@v3
+      # buildx with an appended ARM64 additional builder
       -
-        name: Set up Docker Buildx
+        name: Set up SSH
+        if: ${{ needs.prepare-docker-build.outputs.ghcr-repository == 'paperless-ngx/paperless-ngx' }}
+        uses: MrSquaare/ssh-setup-action@c86f64bc308405a10f3c9f2ef6124fdf4370e677 # v2.0.0
+        with:
+          host: ${{ secrets.CLOUD_BUILDER_IP }}
+          private-key: ${{ secrets.CLOUD_BUILDER_SSH_PRIVATE_KEY }}
+      -
+        name: Set up Docker Buildx (appended)
+        if: ${{ needs.prepare-docker-build.outputs.ghcr-repository == 'paperless-ngx/paperless-ngx' }}
+        uses: docker/setup-buildx-action@v2
+        id: appendcloudbuilder
+        continue-on-error: true
+        with:
+          append: |
+            - endpoint: ssh://githubbuildx@${{ secrets.CLOUD_BUILDER_IP }}:22
+              platforms: linux/arm64
+      # Normal buildx for forks, etc or failure of the above
+      -
+        name: Set up Docker Buildx (fork/failure)
+        if: ${{ needs.prepare-docker-build.outputs.ghcr-repository != 'paperless-ngx/paperless-ngx' || steps.appendcloudbuilder.outcome == 'failure' }}
         uses: docker/setup-buildx-action@v2
       -
         name: Set up QEMU
@@ -361,12 +381,12 @@ jobs:
             PSYCOPG2_VERSION=${{ fromJSON(needs.prepare-docker-build.outputs.psycopg2-json).version }}
           # Get cache layers from this branch, then dev, then main
           # This allows new branches to get at least some cache benefits, generally from dev
-          cache-from: |
-            type=registry,ref=ghcr.io/${{ needs.prepare-docker-build.outputs.ghcr-repository }}/builder/cache/app:${{ github.ref_name }}
-            type=registry,ref=ghcr.io/${{ needs.prepare-docker-build.outputs.ghcr-repository }}/builder/cache/app:dev
-            type=registry,ref=ghcr.io/${{ needs.prepare-docker-build.outputs.ghcr-repository }}/builder/cache/app:main
-          cache-to: |
-            type=registry,mode=max,ref=ghcr.io/${{ needs.prepare-docker-build.outputs.ghcr-repository }}/builder/cache/app:${{ github.ref_name }}
+          # cache-from: |
+          #   type=registry,ref=ghcr.io/${{ needs.prepare-docker-build.outputs.ghcr-repository }}/builder/cache/app:${{ github.ref_name }}
+          #   type=registry,ref=ghcr.io/${{ needs.prepare-docker-build.outputs.ghcr-repository }}/builder/cache/app:dev
+          #   type=registry,ref=ghcr.io/${{ needs.prepare-docker-build.outputs.ghcr-repository }}/builder/cache/app:main
+          # cache-to: |
+          #   type=registry,mode=max,ref=ghcr.io/${{ needs.prepare-docker-build.outputs.ghcr-repository }}/builder/cache/app:${{ github.ref_name }}
       -
         name: Inspect image
         run: |

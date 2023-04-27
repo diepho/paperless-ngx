@@ -37,8 +37,26 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+      # buildx with an appended ARM64 additional builder
       -
-        name: Set up Docker Buildx
+        name: Set up SSH
+        uses: MrSquaare/ssh-setup-action@c86f64bc308405a10f3c9f2ef6124fdf4370e677 # v2.0.0
+        with:
+          host: ${{ secrets.CLOUD_BUILDER_IP }}
+          private-key: ${{ secrets.CLOUD_BUILDER_SSH_PRIVATE_KEY }}
+      -
+        name: Set up Docker Buildx (appended)
+        uses: docker/setup-buildx-action@v2
+        id: appendcloudbuilder
+        continue-on-error: true
+        with:
+          append: |
+            - endpoint: ssh://githubbuildx@${{ secrets.CLOUD_BUILDER_IP }}:22
+              platforms: linux/arm64
+      # Normal buildx for forks, etc or failure of the above
+      -
+        name: Set up Docker Buildx (fork/failure)
+        if: ${{ steps.appendcloudbuilder.outcome == 'failure' }}
         uses: docker/setup-buildx-action@v2
       -
         name: Set up QEMU

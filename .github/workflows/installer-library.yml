@@ -35,6 +35,7 @@ jobs:
   prepare-docker-build:
     name: Prepare Docker Image Version Data
     runs-on: ubuntu-22.04
+    if: github.repository_owner == 'paperless-ngx'
     steps:
       -
         name: Set ghcr repository name
@@ -125,6 +126,7 @@ jobs:
     needs:
       - prepare-docker-build
     uses: ./.github/workflows/reusable-workflow-builder.yml
+    secrets: inherit
     with:
       dockerfile: ./docker-builders/Dockerfile.qpdf
       build-platforms: linux/amd64
@@ -137,6 +139,7 @@ jobs:
     needs:
       - prepare-docker-build
     uses: ./.github/workflows/reusable-workflow-builder.yml
+    secrets: inherit
     with:
       dockerfile: ./docker-builders/Dockerfile.jbig2enc
       build-json: ${{ needs.prepare-docker-build.outputs.jbig2enc-json }}
@@ -148,6 +151,7 @@ jobs:
     needs:
       - prepare-docker-build
     uses: ./.github/workflows/reusable-workflow-builder.yml
+    secrets: inherit
     with:
       dockerfile: ./docker-builders/Dockerfile.psycopg2
       build-json: ${{ needs.prepare-docker-build.outputs.psycopg2-json }}
@@ -160,6 +164,7 @@ jobs:
       - prepare-docker-build
       - build-qpdf-debs
     uses: ./.github/workflows/reusable-workflow-builder.yml
+    secrets: inherit
     with:
       dockerfile: ./docker-builders/Dockerfile.pikepdf
       build-json: ${{ needs.prepare-docker-build.outputs.pikepdf-json }}
