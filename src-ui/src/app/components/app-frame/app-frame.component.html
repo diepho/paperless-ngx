@@ -5,10 +5,8 @@
     <span class="navbar-toggler-icon"></span>
   </button>
   <a class="navbar-brand col-auto col-md-3 col-lg-2 me-0 px-3 py-3 order-sm-0" [ngClass]="slimSidebarEnabled ? 'slim' : 'col-auto col-md-3 col-lg-2'" routerLink="/dashboard" tourAnchor="tour.intro">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 198.43 238.91" width="1em" class="me-2" fill="currentColor">
-      <path d="M194.7,0C164.22,70.94,17.64,79.74,64.55,194.06c.58,1.47-10.85,17-18.47,29.9-1.76-6.45-3.81-13.48-3.52-14.07,38.11-45.14-27.26-70.65-30.78-107.58C-4.64,131.62-10.5,182.92,39,212.53c.3,0,2.64,11.14,3.81,16.71a58.55,58.55,0,0,0-2.93,6.45c-1.17,2.93,7.62,2.64,7.62,3.22.88-.29,21.7-36.93,22.28-37.23C187.67,174.72,208.48,68.6,194.7,0ZM134.61,74.75C79.5,124,70.12,160.64,71.88,178.53,53.41,134.85,107.64,86.77,134.61,74.75ZM28.2,145.11c10.55,9.67,28.14,39.28,13.19,56.57C44.91,193.77,46.08,175.89,28.2,145.11Z" transform="translate(0 0)"/>
-    </svg>
-    <span class="ms-2" [class.visually-hidden]="slimSidebarEnabled" i18n="app title">Paperless-ngx</span>
+    <img src="https://edunetjsc.com/web/image/2196-2cec7a06/edunet-logo%20%281%29.png" height="17" class="img img-fluid" alt="Edunet Logo" loading="lazy">
+    <span class="ms-2" [class.visually-hidden]="slimSidebarEnabled" i18n="app title">Smart vOCR</span>
   </a>
   <div class="search-form-container flex-grow-1 py-2 pb-3 pb-sm-2 px-3 ps-md-4 me-sm-auto order-3 order-sm-1" *appIfPermissions="{ action: PermissionAction.View, type: PermissionType.Document }">
     <form (ngSubmit)="search()" class="form-inline flex-grow-1">
@@ -18,9 +16,7 @@
       <input class="form-control form-control-sm" type="text" placeholder="Search documents" aria-label="Search"
         [formControl]="searchField" [ngbTypeahead]="searchAutoComplete" (keyup)="searchFieldKeyup($event)" (selectItem)="itemSelected($event)" i18n-placeholder>
       <button type="button" *ngIf="!searchFieldEmpty" class="btn btn-link btn-sm px-0 position-absolute top-0 end-0" (click)="resetSearchField()">
-        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-x me-1" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-          <path fill-rule="evenodd" d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
-        </svg>
+        <img src="https://edunetjsc.com/web/image/2192-5853a0e3/edunet-smartvocr-dark.png" height="72" class="img img-fluid" alt="Website Edunet" loading="lazy">
       </button>
     </form>
   </div>
@@ -210,11 +206,11 @@
               <div class="me-3">{{ versionString }}</div>
               <div *ngIf="!settingsService.updateCheckingIsSet || appRemoteVersion" class="version-check">
                 <ng-template #updateAvailablePopContent>
-                  <span class="small">Paperless-ngx {{ appRemoteVersion.version }} <ng-container i18n>is available.</ng-container><br/><ng-container i18n>Click to view.</ng-container></span>
+                  <span class="small">Smart vOCR {{ appRemoteVersion.version }} <ng-container i18n>is available.</ng-container><br/><ng-container i18n>Click to view.</ng-container></span>
                 </ng-template>
                 <ng-template #updateCheckingNotEnabledPopContent>
                   <p class="small mb-2">
-                    <ng-container i18n>Paperless-ngx can automatically check for updates</ng-container>
+                    <ng-container i18n>Smart vOCR can automatically check for updates</ng-container>
                   </p>
                   <div class="btn-group btn-group-xs flex-fill w-100">
                     <button class="btn btn-outline-primary" (click)="setUpdateChecking(true)">Enable</button>

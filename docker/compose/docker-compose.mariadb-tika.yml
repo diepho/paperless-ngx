@@ -51,7 +51,8 @@ services:
       MARIADB_ROOT_PASSWORD: paperless
 
   webserver:
-    image: ghcr.io/paperless-ngx/paperless-ngx:latest
+#    image: ghcr.io/paperless-ngx/paperless-ngx:latest
+    image: diepho/smartvocr:viet-dev
     restart: unless-stopped
     depends_on:
       - db
@@ -59,7 +60,7 @@ services:
       - gotenberg
       - tika
     ports:
-      - "8000:8000"
+      - "8011:8000"
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8000"]
       interval: 30s

@@ -111,6 +111,7 @@ import localeSr from '@angular/common/locales/sr'
 import localeSv from '@angular/common/locales/sv'
 import localeTr from '@angular/common/locales/tr'
 import localeZh from '@angular/common/locales/zh'
+import localeVi from '@angular/common/locales/vi'
 import { PermissionsDialogComponent } from './components/common/permissions-dialog/permissions-dialog.component'
 import { PermissionsFormComponent } from './components/common/input/permissions/permissions-form/permissions-form.component'
 
@@ -137,6 +138,7 @@ registerLocaleData(localeSr)
 registerLocaleData(localeSv)
 registerLocaleData(localeTr)
 registerLocaleData(localeZh)
+registerLocaleData(localeVi)
 
 function initializeApp(settings: SettingsService) {
   return () => {

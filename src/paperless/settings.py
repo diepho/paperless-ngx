@@ -564,6 +564,7 @@ LANGUAGES = [
     ("sv-se", _("Swedish")),
     ("tr-tr", _("Turkish")),
     ("zh-cn", _("Chinese Simplified")),
+    ("vi-vn", _("Vietnamese")),    
 ]
 
 LOCALE_PATHS = [os.path.join(BASE_DIR, "locale")]

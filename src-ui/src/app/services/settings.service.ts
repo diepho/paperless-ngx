@@ -298,6 +298,12 @@ export class SettingsService {
         englishName: 'Chinese Simplified',
         dateInputFormat: 'yyyy-mm-dd',
       },
+      {
+        code: 'vi-vn',
+        name: $localize`Tiếng Việt`,
+        englishName: 'Vietnamese',
+        dateInputFormat: 'dd-mm-yyyy',
+      },
     ]
 
     // Sort languages by localized name at runtime
