@@ -8,6 +8,10 @@ __pycache__/
 # Distribution / packaging
 .Python
 env/
+docker/compose/data/
+docker/compose/export/
+docker/compose/media/
+docker/compose/trash/
 build/
 develop-eggs/
 dist/
